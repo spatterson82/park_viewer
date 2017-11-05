@@ -1,3 +1,19 @@
+function openNav() {
+    console.log("clicked open");
+    document.getElementById("panel_border").style.width = "100%";
+    $("#panel_title").html('Morse Mountain');
+    $("#map_title").html('');
+}
+
+function closeNav() {
+    console.log("clicked close");
+    document.getElementById("panel_border").style.width = "0";
+    $("#panel_title").html('');
+    $("#map_title").html('Morse Mountain');
+}
+
+
+
 (function() {
     'use strict';
 
