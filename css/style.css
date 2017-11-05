@@ -1,7 +1,7 @@
 html, body, #main {
     height: 100%;
     width: 100%;
-    margin: 0px;
+    /*margin: 0px;*/
 }
 
 #map_border {
@@ -14,9 +14,11 @@ html, body, #main {
     z-index: 4;
 }
 #map {
+    position: relative;
+    top: -20px;
     margin: 0 auto;
-    height: 85%;
-    width: 85%;
+    height: 90%;
+    width: 90%;
 
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -63,9 +65,11 @@ html, body, #main {
     z-index: 5;
 }
 #panel {
+    position: relative;
+    top: -20px;
     margin: 0 auto;
-    height: 85%;
-    width: 85%;
+    height: 90%;
+    width: 90%;
 
     background-color: #64aa8c;
     -webkit-box-sizing: border-box;
@@ -80,4 +84,8 @@ html, body, #main {
     top: -30px;
     font-size: 25px;
     text-align: center;
+}
+
+#form {
+
 }
