@@ -14,10 +14,7 @@ html, body, #main {
     z-index: 4;
 }
 #map {
-    position: absolute;
-    top: 80px;
-    left: 30px;
-    right: 30px;
+    margin: 0 auto;
     height: 85%;
     width: 85%;
 
@@ -61,15 +58,12 @@ html, body, #main {
     position: absolute;
     background-color: white;
     overflow-x: hidden;
-    transition: 0.2s;
+    transition: 0.1s;
     padding-top: 60px;
     z-index: 5;
 }
 #panel {
-    position: absolute;
-    top: 80px;
-    left: 30px;
-    right: 30px;
+    margin: 0 auto;
     height: 85%;
     width: 85%;
 
@@ -78,8 +72,6 @@ html, body, #main {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     z-index: 1;
-    -webkit-border-radius:;
-    -moz-border-radius:;
     border-radius: 20px;
 }
 
