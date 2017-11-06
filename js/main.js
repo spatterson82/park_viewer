@@ -29,5 +29,50 @@ function closeNav() {
     }
 
 
+    // ##################################################
+    // form actions
+    // ##################################################
+    var api_key = '0bc661c1ea32153881fc4a135ca4ccb8c18bae18';
+
+    // function to authenticate
+    // https://{spatterson8}.carto.com/api/v2/sql?q={SQL statement}&api_key={api_key}
+    function get_sql_query(layer) {
+        return 'SELECT * FROM ' + layer + '&api_key=' + api_key;
+    }
+
+    function createPopup(feature) {
+        var prop = feature.properties;
+
+        return L.popup().setContent('<p>' + prop.type + '</p>');
+    }
+
+    var base_url = 'https://spatterson8.carto.com/api/v2/sql?format=GeoJSON&q=';
+
+    $("input:checkbox").change(function() {
+        console.log('ID: ' + this.id);
+        if ($(this).is(":checked")) {
+            console.log($('#' + this.id).is(':checked'));
+
+            $.getJSON(base_url + get_sql_query(this.id), function(data) {
+                var new_layers = L.geoJSON(data, {
+                    onEachFeature: function (row, layer) {
+                        layer.bindPopup(createPopup(row));
+                    }
+                });
+                new_layers.addTo(map);
+                // L.layerGroup(new_layers._layers).addTo(map);
+            });
+        } else {
+            console.log($('#' + this.id).is(':checked'));
+            for (var layer in map._layers) {
+                if (layer > 26) {
+                    map.removeLayer(map._layers[layer]);
+                }
+            }
+
+        }
+    });
+
+
     $(document).ready(initialize());
 })();
