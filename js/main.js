@@ -52,21 +52,23 @@ function closeNav() {
         console.log('ID: ' + this.id);
         if ($(this).is(":checked")) {
             console.log($('#' + this.id).is(':checked'));
-
+            var self = this;
             $.getJSON(base_url + get_sql_query(this.id), function(data) {
                 var new_layers = L.geoJSON(data, {
                     onEachFeature: function (row, layer) {
                         layer.bindPopup(createPopup(row));
-                    }
+                    },
+                    id: self.id
                 });
+                console.log(self.id);
                 new_layers.addTo(map);
-                // L.layerGroup(new_layers._layers).addTo(map);
             });
         } else {
             console.log($('#' + this.id).is(':checked'));
-            for (var layer in map._layers) {
-                if (layer > 26) {
-                    map.removeLayer(map._layers[layer]);
+            var layer_list = map._layers;
+            for (var layer in layer_list) {
+                if (layer_list[layer].options.id === this.id) {
+                    map.removeLayer(layer_list[layer]);
                 }
             }
 
