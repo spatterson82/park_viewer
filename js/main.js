@@ -1,6 +1,6 @@
 function openNav() {
     console.log("clicked open");
-    document.getElementById("panel_border").style.width = "100%";
+    document.getElementById("panel_border").style.width = "90%";
     $("#panel_title").html('Morse Mountain');
     $("#map_title").html('');
 }
@@ -18,7 +18,15 @@ function closeNav() {
     'use strict';
 
     function initialize() {
-        map = L.map('map').setView([43.738, -69.831], 14);
+        map = L.map('map', {
+            center: [43.738, -69.831],
+            zoom: 14,
+            minZoom: 14,
+            maxBounds: L.latLngBounds(L.latLng(43.756836916525415, -69.81064796447755),
+                L.latLng(43.71919477900117, -69.85133171081544)),
+            zoomControl: false
+        });
+        L.Control.zoomHome().addTo(map);
         L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/256/{z}/{x}/{y}?' +
             'access_token=pk.eyJ1Ijoic3BhdHRlcnNvbjgiLCJhIjoiY2lzZzBnbmlxMDFzNjJzbnZ1cXJ0bDJ5cSJ9.r_0eIQ9LIuNS3LV-GL1AIg'
         ).addTo(map);
@@ -35,9 +43,9 @@ function closeNav() {
     var api_key = '0bc661c1ea32153881fc4a135ca4ccb8c18bae18';
 
     // function to authenticate
-    // https://{spatterson8}.carto.com/api/v2/sql?q={SQL statement}&api_key={api_key}
     function get_sql_query(layer) {
         return 'SELECT * FROM ' + layer + '&api_key=' + api_key;
+        // return 'SELECT * FROM ' + layer + ' WHERE ' + layer + '.the_geom  && ST_MakeEnvelope(-69.85, 43.72, -69.8, 43.76);';
     }
 
     function createPopup(feature) {

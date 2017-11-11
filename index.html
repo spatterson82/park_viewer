@@ -9,12 +9,14 @@
     <link rel="stylesheet" href="lib/leaflet/leaflet.css">
     <link rel="stylesheet" href="lib/bootstrap-3.3.7-dist/css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="js/leaflet_home/leaflet.zoomhome.css"/>
     <!--[if IE<9]>
         <link rel="stylesheet" href="css/style.ie.css">
     <![endif]-->
 
     <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
     <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
 
     <script>
         var map = null;
@@ -26,6 +28,7 @@
         <div id="map_border">
             <p id="map_title"></p>
             <div id="map_button">
+                <p onclick="openNav()">Search Form</p>
                 <a href="javascript:void(0)" id="openbtn" onclick="openNav()">&#187;</a>
             </div>
             <div id="map">
@@ -36,18 +39,18 @@
         <div id="panel_border">
             <p id="panel_title">Morse Mountain</p>
             <div id="panel_button">
+                <p onclick="closeNav()">Open Map</p>
                 <a href="javascript:void(0)" id="closebtn" onclick="closeNav()">&#171;</a>
             </div>
             <div id="panel">
                 <div id="form">
                     <form>
-                        <label>Viewer Layers:</label>
+                        <p>View Layers:</p>
+                        <input type="checkbox" id="parcels">
+                        <label for="parcels"> - Parcels</label>
                         <br>
-                        <input type="checkbox" id="parcels_selection">
-                        <label for="parcels_selection"> - Parcels</label>
-                        <br>
-                        <input type="checkbox" id="towns_and_townships_polygons_maine_metwp24p">
-                        <label for="towns_and_townships_polygons_maine_metwp24p"> - Sec. Town. Range</label>
+                        <input type="checkbox" id="trs">
+                        <label for="trs"> - Sec. Town. Range</label>
                         <br>
                         <input type="checkbox" id="morse_mountain_pts">
                         <label for="morse_mountain_pts"> - Park Points</label>
@@ -55,8 +58,8 @@
                         <input type="checkbox" id="land_type">
                         <label for="land_type"> - Land Type</label>
                         <br>
-                        <input type="checkbox" id="ne_10m_populated_places_simple">
-                        <label for="ne_10m_populated_places_simple"> - Address Points</label>
+                        <input type="checkbox" id="addresses">
+                        <label for="addresses"> - Address Points</label>
                         <br>
                     </form>
                 </div>
@@ -71,7 +74,7 @@
     <script type="text/javascript" src="lib/jquery-3.1.1.js"></script>
     <script type="text/javascript" src="lib/leaflet/leaflet.js"></script>
     <script type="text/javascript" src="lib/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
-
+    <script src="js/leaflet_home/leaflet.zoomhome.js"></script>
     <script type="text/javascript" src="js/styling.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 
