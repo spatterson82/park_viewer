@@ -1,6 +1,7 @@
 function openNav() {
     console.log("clicked open");
     document.getElementById("panel_border").style.width = "90%";
+    $("#map_border").css('background-color', '#999999');
     $("#panel_title").html('Morse Mountain');
     $("#map_title").html('');
 }
@@ -8,6 +9,7 @@ function openNav() {
 function closeNav() {
     console.log("clicked close");
     document.getElementById("panel_border").style.width = "0";
+    $("#map_border").css('background-color', 'white');
     $("#panel_title").html('');
     $("#map_title").html('Morse Mountain');
 }
@@ -20,10 +22,10 @@ function closeNav() {
     function initialize() {
         map = L.map('map', {
             center: [43.738, -69.831],
-            zoom: 14,
-            minZoom: 14,
-            maxBounds: L.latLngBounds(L.latLng(43.756836916525415, -69.81064796447755),
-                L.latLng(43.71919477900117, -69.85133171081544)),
+            zoom: 13,
+            minZoom: 13,
+            maxBounds: L.latLngBounds(L.latLng(43.76, -69.71),
+                L.latLng(43.69, -69.92)),
             zoomControl: false
         });
         L.Control.zoomHome().addTo(map);
@@ -48,20 +50,51 @@ function closeNav() {
         // return 'SELECT * FROM ' + layer + ' WHERE ' + layer + '.the_geom  && ST_MakeEnvelope(-69.85, 43.72, -69.8, 43.76);';
     }
 
-    function createPopup(feature) {
-        var prop = feature.properties;
 
+    function createPopup(feature) {
+        // TODO make popup unique by layer and show everything
+
+        var prop = feature.properties;
         return L.popup().setContent('<p>' + prop.type + '</p>');
     }
 
-    var base_url = 'https://spatterson8.carto.com/api/v2/sql?format=GeoJSON&q=';
 
+
+    function build_query_combo(final_set) {
+        // console.log("final set: ", final_set);
+        var combo_html = '<select>';
+        var middle = '';
+        var final_array = Array.from(final_set);
+
+        for (var i in final_array) {
+            // middle += final_set[i];
+            middle += '<option value="' + final_array[i] + '">' + final_array[i] + "</option>";
+        }
+        combo_html += middle + "</select>";
+
+        $(combo_html).appendTo("#form");
+    }
+    function get_features(features) {
+        // console.log("new_layers: ", features);
+        var query_set = new Set();
+        features.forEach(function(feature) {
+            query_set.add(feature.properties.type);
+        });
+        build_query_combo(query_set);
+    }
+
+
+    // checkbox logic
+    var base_url = 'https://spatterson8.carto.com/api/v2/sql?format=GeoJSON&q=';
     $("input:checkbox").change(function() {
         console.log('ID: ' + this.id);
         if ($(this).is(":checked")) {
             console.log($('#' + this.id).is(':checked'));
             var self = this;
             $.getJSON(base_url + get_sql_query(this.id), function(data) {
+                // TODO Create dropdown options for querying
+                get_features(data.features);
+
                 var new_layers = L.geoJSON(data, {
                     onEachFeature: function (row, layer) {
                         layer.bindPopup(createPopup(row));
@@ -69,6 +102,9 @@ function closeNav() {
                     id: self.id
                 });
                 console.log(self.id);
+
+
+                // console.log("new_layers: ", new_layers);
                 new_layers.addTo(map);
             });
         } else {

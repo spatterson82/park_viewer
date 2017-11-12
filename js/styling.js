@@ -1,3 +1,6 @@
+/**
+ * Styling of square border window by window size
+ */
 $("#form").css({
     'position': "absolute",
     'left': ($(window).width() - $('#panel').outerWidth())/5,
@@ -5,8 +8,6 @@ $("#form").css({
     'height': '90%',
     'width': 'calc(100% - ' + ($(window).width() - $('#panel').outerWidth())/4,
 });
-console.log($('#panel').outerWidth());
-console.log($(window).width());
 
 $(window).resize(function() {
     console.log("resizing");
