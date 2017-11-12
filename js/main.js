@@ -60,9 +60,9 @@ function closeNav() {
 
 
 
-    function build_query_combo(final_set) {
+    function build_query_combo(final_set, id) {
         // console.log("final set: ", final_set);
-        var combo_html = '<select>';
+        var combo_html = '<select id="' + id + '_combo">';
         var middle = '';
         var final_array = Array.from(final_set);
 
@@ -74,13 +74,13 @@ function closeNav() {
 
         $(combo_html).appendTo("#form");
     }
-    function get_features(features) {
+    function get_features(features, id) {
         // console.log("new_layers: ", features);
         var query_set = new Set();
         features.forEach(function(feature) {
             query_set.add(feature.properties.type);
         });
-        build_query_combo(query_set);
+        build_query_combo(query_set, id);
     }
 
 
@@ -93,7 +93,7 @@ function closeNav() {
             var self = this;
             $.getJSON(base_url + get_sql_query(this.id), function(data) {
                 // TODO Create dropdown options for querying
-                get_features(data.features);
+                get_features(data.features, self.id);
 
                 var new_layers = L.geoJSON(data, {
                     onEachFeature: function (row, layer) {
@@ -115,6 +115,9 @@ function closeNav() {
                     map.removeLayer(layer_list[layer]);
                 }
             }
+
+            // remove combo boxes
+            $('#' + this.id + '_combo').remove();
 
         }
     });
