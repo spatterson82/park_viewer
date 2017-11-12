@@ -72,7 +72,8 @@ function closeNav() {
         }
         combo_html += middle + "</select>";
 
-        $(combo_html).appendTo("#form");
+        // TODO Add styling to move select box over or underneath
+        $(combo_html).appendTo("#" + id + '_div');
     }
     function get_features(features, id) {
         // console.log("new_layers: ", features);
