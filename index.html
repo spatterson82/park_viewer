@@ -25,6 +25,7 @@
 
     <script>
         var map = null;
+        var editing = false;
     </script>
 </head>
 
@@ -51,27 +52,36 @@
                 <div id="form">
                     <form>
                         <p>View Layers:</p>
-                        <div id="parcels_div">
-                            <input type="checkbox" id="parcels">
-                            <label for="parcels"> - Parcels</label>
-                        </div>
-                        <div id="trs_div">
-                            <input type="checkbox" id="trs">
-                            <label for="trs"> - Sec. Town. Range</label>
-                        </div>
-                        <div id="morse_mountain_pts_div">
-                            <input type="checkbox" id="morse_mountain_pts">
-                            <label for="morse_mountain_pts"> - Park Points</label>
-                        </div>
-                        <div id="land_type_div">
-                            <input type="checkbox" id="land_type">
-                            <label for="land_type"> - Land Type</label>
-                        </div>
-                        <div id="addresses_div">
-                            <input type="checkbox" id="addresses">
-                            <label for="addresses"> - Address Points</label>
-                        </div>
+                        <input type="checkbox" id="parcels">
+                        <label for="parcels"> - Parcels</label>
+                        <div id="parcels_div"></div>
+                        <input type="checkbox" id="trs">
+                        <label for="trs"> - Sec. Town. Range</label>
+                        <div id="trs_div"></div>
+                        <input type="checkbox" id="morse_mountain_pts">
+                        <label for="morse_mountain_pts"> - Park Points</label>
+                        <div id="morse_mountain_pts_div"></div>
+                        <input type="checkbox" id="land_type">
+                        <label for="land_type"> - Land Type</label>
+                        <div id="land_type_div"></div>
+                        <input type="checkbox" id="addresses">
+                        <label for="addresses"> - Address Points</label>
+                        <div id="addresses_div"></div>
                     </form>
+                    <br><br>
+                    <p>Help us identify trees.</p>
+                    <p>Add a new point:</p>
+                    Tree Species:   <select id="species">
+                                        <option value="" disabled selected style="display: none;">Choose Type</option>
+                                        <option value="Ash">Ash</option>
+                                        <option value="Aspen">Aspen</option>
+                                        <option value="Beech">Beech</option>
+                                        <option value="Birch">Birch</option>
+                                        <option value="Maple">Maple</option>
+                                        <option value="Oak">Oak</option>
+                                    </select>
+                    <br><br>
+                    Add point: <a href="#" id="add_tree">Choose on map</a>
                 </div>
 
                 <!--add form elements for whatevs-->
@@ -87,6 +97,7 @@
     <script src="js/leaflet_home/leaflet.zoomhome.js"></script>
     <script type="text/javascript" src="js/styling.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/user.js"></script>
 
 </body>
 </html>

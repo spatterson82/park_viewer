@@ -24,6 +24,11 @@ form label {
     top: 5px;
 }
 
+#form div {
+    position: relative;
+    left: 20px;
+}
+
 
 #panel_border {
     height: 100%;

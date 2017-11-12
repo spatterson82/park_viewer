@@ -1,5 +1,7 @@
 function openNav() {
     console.log("clicked open");
+    editing = false;
+    console.log('editing:', editing);
     document.getElementById("panel_border").style.width = "90%";
     $("#map_border").css('background-color', '#999999');
     $("#panel_title").html('Morse Mountain');

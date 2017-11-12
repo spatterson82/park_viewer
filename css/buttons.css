@@ -50,3 +50,28 @@
     color: #282828;
     text-decoration: none;
 }
+
+#add_tree {
+    text-decoration: none;
+    color: white;
+    font-size: 12px;
+    padding: 5px;
+    text-shadow: 0px -1px 0px rgba(30, 30, 30, 0.8);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background: green;
+}
+#add_tree:hover {
+    -webkit-box-shadow: -1px 2px 11px rgba(50, 50, 50, 1);
+    -moz-box-shadow:    -1x 2px 11px rgba(50, 50, 50, 1);
+    box-shadow:         -1px 2px 11px rgba(50, 50, 50, 1);
+}
+#add_tree:active {
+    position: relative; top: 1px;
+    color:black;
+}
+/*change cursor for editing*/
+.leaflet-container.crosshair-cursor-enabled {
+    cursor:crosshair;
+}
