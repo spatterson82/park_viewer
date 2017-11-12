@@ -12,12 +12,14 @@ $('#add_tree').click(function() {
         editing = true;
         console.log('editing:', editing);
 
+        var tree_location;
         map.on('click', function(location) {
             if (editing) {
-                var tree_location = new L.marker(location.latlng, {
+                tree_location = new L.marker(location.latlng, {
                     draggable: true
                 });
-                tree_location.bindPopup($('#species').val());
+                var popup = 'Species: ' + $('#species').val() + '<br><br><a id="popup_button">Remove</a>';
+                tree_location.bindPopup(popup);
                 tree_location.addTo(map);
 
                 editing = false;

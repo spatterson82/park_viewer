@@ -75,3 +75,7 @@
 .leaflet-container.crosshair-cursor-enabled {
     cursor:crosshair;
 }
+
+#popup_button {
+    cursor: pointer;
+}
