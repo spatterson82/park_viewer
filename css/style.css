@@ -31,7 +31,7 @@ form label {
 
 #panel_border {
     height: 100%;
-    width: 90%;  /*set to zero*/
+    width: 450px;  /*set to zero*/
     position: absolute;
     background-color: #586843;
     overflow-x: hidden;
@@ -43,7 +43,7 @@ form label {
     position: relative;
     top: -20px;
     margin: 0 auto;
-    height: 100%;
+    height: 90%;
     width: 90%;
 
     background-color: #9eae88;
