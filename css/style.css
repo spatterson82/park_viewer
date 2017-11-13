@@ -5,7 +5,6 @@ html, body, #main {
 }
 
 
-
 /*form styles*/
 input[type=checkbox] {
     position: relative;
@@ -65,4 +64,9 @@ form label {
 #form {
     background-color: #cad6b9;
     width: 90%;
+}
+
+#add_tree, #species {
+    position: relative;
+    left: 20px;
 }
