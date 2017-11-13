@@ -12,12 +12,21 @@ $('#add_tree').click(function() {
         editing = true;
         console.log('editing:', editing);
 
+        var treeicon = L.icon({
+            iconUrl: 'img/tree.png',
+
+            iconSize:     [38, 50], // size of the icon
+            iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
+
         var tree_location;
         map.on('click', function(location) {
             if (editing) {
                 tree_location = new L.marker(location.latlng, {
                     draggable: true,
-                    id: 'tree_location'
+                    id: 'tree_location',
+                    icon: treeicon
                 });
                 var popup = 'Species: ' + $('#species').val() + '<br><br><a id="popup_button">Remove</a>';
                 tree_location.bindPopup(popup);
