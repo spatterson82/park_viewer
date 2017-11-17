@@ -2,7 +2,7 @@ function openNav() {
     console.log("clicked open");
     editing = false;
     console.log('editing:', editing);
-    document.getElementById("panel_border").style.width = "450px";
+    document.getElementById("panel_border").style.width = "350px";
     $("#map_border").css('background-color', '#999999');
     $("#panel_title").html('Morse Mountain');
     $("#map_title").html('');
@@ -34,10 +34,6 @@ function closeNav() {
         L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/256/{z}/{x}/{y}?' +
             'access_token=pk.eyJ1Ijoic3BhdHRlcnNvbjgiLCJhIjoiY2lzZzBnbmlxMDFzNjJzbnZ1cXJ0bDJ5cSJ9.r_0eIQ9LIuNS3LV-GL1AIg'
         ).addTo(map);
-        // , {doubleClickZoom: false})
-        // map.locate({setView: true, maxZoom: 11});
-
-        // map.panTo(new L.LatLng(40, -85));
     }
 
 
@@ -49,7 +45,6 @@ function closeNav() {
     // function to authenticate
     function get_sql_query(layer) {
         return 'SELECT * FROM ' + layer + '&api_key=' + api_key;
-        // return 'SELECT * FROM ' + layer + ' WHERE ' + layer + '.the_geom  && ST_MakeEnvelope(-69.85, 43.72, -69.8, 43.76);';
     }
 
 
@@ -100,6 +95,7 @@ function closeNav() {
 
                 var new_layers = L.geoJSON(data, {
                     onEachFeature: function (row, layer) {
+                        console.log(row, layer);
                         layer.bindPopup(createPopup(row));
                     },
                     id: self.id
