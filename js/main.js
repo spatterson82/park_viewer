@@ -90,7 +90,7 @@ function closeNav() {
             // register select box onchange
             var combo_id = '#' + self.id + '_combo';
             $(combo_id).change(function() {
-                filter_data(this)
+                filter_data(this, self.id);
             });
 
             var new_layers;
@@ -151,12 +151,7 @@ function closeNav() {
             load_data(self);
         } else {
             console.log($('#' + this.id).is(':checked'));
-            var layer_list = map._layers;
-            for (var layer in layer_list) {
-                if (layer_list[layer].options.id === this.id) {
-                    map.removeLayer(layer_list[layer]);
-                }
-            }
+            remove_data(this.id);
 
             // remove combo boxes
             $('#' + this.id + '_combo').remove();
@@ -164,63 +159,71 @@ function closeNav() {
         }
     });
 
+    function remove_data(id) {
+        console.log('remove data:', id);
+        var layer_list = map._layers;
+        for (var layer in layer_list) {
+            if (layer_list[layer].options.id === id) {
+                map.removeLayer(layer_list[layer]);
+            }
+        }
+    }
 
 
     // filtering if select box queried
-    function filter_data(select_box) {
-        console.log('select:', select_box, select_box.value);
-        // TODO make this function be a filter version of load_data()
+    function filter_data(select_box, id) {
+        // remove all points
+        remove_data(id);
 
-        // $.getJSON(base_url + get_sql_query(this.id), function(data) {
-        //     // TODO Create dropdown options for querying
-        //     get_features(data.features, self.id);
-        //
-        //     console.log("data:", data);
-        //     var new_layers;
-        //     if (data.features[0].geometry.type === 'Point') {
-        //         new_layers = L.geoJSON(data, {
-        //             onEachFeature: function (row, layer) {
-        //                 // console.log(row, layer);
-        //                 layer.bindPopup(createPopup(row));
-        //             },
-        //             id: self.id,
-        //             pointToLayer: function (feature, latlng) {
-        //                 var geojsonMarkerOptions = {
-        //                     radius: 8,
-        //                     fillColor: "#ff7800",
-        //                     color: "#000",
-        //                     weight: 1,
-        //                     opacity: 1,
-        //                     fillOpacity: 0.8
-        //                 };
-        //                 return L.circleMarker(latlng, geojsonMarkerOptions);
-        //             }
-        //         });
-        //     } else if (data.features[0].geometry.type === 'Polygon') {
-        //         var new_layers = L.geoJSON(data, {
-        //             onEachFeature: function (row, layer) {
-        //                 // console.log(row, layer);
-        //                 layer.bindPopup(createPopup(row));
-        //             },
-        //             id: self.id,
-        //             style: function (feature) {
-        //                 console.log("feature:", feature);
-        //                 if (feature.geometry.type === 'Point') {
-        //
-        //                 } else if (feature.geometry.type === 'Polygon') {
-        //                     switch (feature.properties.party) {
-        //                         case 'Republican':
-        //                             return {color: "#ff0000"};
-        //                         case 'Democrat':
-        //                             return {color: "#0000ff"};
-        //                     }
-        //                 }
-        //             }
-        //         });
-        //     }
-        //     console.log(self.id);
-        //     new_layers.addTo(map);
-        // });
+        $.getJSON(base_url + get_sql_query(id), function(data) {
+            var new_layers;
+            if (data.features[0].geometry.type === 'Point') {
+                new_layers = L.geoJSON(data, {
+                    onEachFeature: function (row, layer) {
+                        // console.log(row, layer);
+                        layer.bindPopup(createPopup(row));
+                    },
+                    id: id,
+                    pointToLayer: function (feature, latlng) {
+                        var geojsonMarkerOptions = {
+                            radius: 8,
+                            fillColor: "#ff7800",
+                            color: "#000",
+                            weight: 1,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        };
+                        return L.circleMarker(latlng, geojsonMarkerOptions);
+                    },
+                    filter: function(feature, layer) {
+                        return feature.properties.type === select_box.value;
+                    }
+                });
+            } else if (data.features[0].geometry.type === 'Polygon') {
+                var new_layers = L.geoJSON(data, {
+                    onEachFeature: function (row, layer) {
+                        // console.log(row, layer);
+                        layer.bindPopup(createPopup(row));
+                    },
+                    id: self.id,
+                    style: function (feature) {
+                        console.log("feature:", feature);
+                        if (feature.geometry.type === 'Point') {
+
+                        } else if (feature.geometry.type === 'Polygon') {
+                            switch (feature.properties.party) {
+                                case 'Republican':
+                                    return {color: "#ff0000"};
+                                case 'Democrat':
+                                    return {color: "#0000ff"};
+                            }
+                        }
+                    }
+                });
+            }
+            console.log(self.id);
+            new_layers.addTo(map);
+        });
     }
 
 
