@@ -176,18 +176,19 @@ function closeNav() {
             } else if (data_type === 'Polygon' || data_type === 'MultiPolygon') {
                 new_layers = L.geoJSON(data, {
                     onEachFeature: function (row, layer) {
-                        console.log(row.properties);
                         layer.bindPopup(createPopup(row, self.id));
                     },
                     id: self.id,
-                    // style: function (feature) {
-                    //     switch (feature.properties.party) {
-                    //         case 'Republican':
-                    //             return {color: "#ff0000"};
-                    //         case 'Democrat':
-                    //             return {color: "#0000ff"};
-                    //     }
-                    // }
+                    style: function (feature) {
+                        switch (self.id) {
+                            case 'parcels':
+                                return {color: "#ff6689"};
+                            case 'trs':
+                                return {color: "#faffa0"};
+                            case 'land_type':
+                                return {color: "#38ff87"};
+                        }
+                    }
                 });
             }
             console.log(self.id);
@@ -278,14 +279,23 @@ function closeNav() {
                         layer.bindPopup(createPopup(row, id));
                     },
                     id: id,
-                    // style: function (feature) {
-                    //     switch (feature.properties.party) {
-                    //         case 'Republican':
-                    //             return {color: "#ff0000"};
-                    //         case 'Democrat':
-                    //             return {color: "#0000ff"};
-                    //     }
-                    // }
+                    style: function (feature) {
+                        switch (id) {
+                            case 'parcels':
+                                return {color: "#ff6689"};
+                            case 'trs':
+                                return {color: "#faffa0"};
+                            case 'land_type':
+                                return {color: "#38ff87"};
+                        }
+                    },
+                    filter: function(feature, layer) {
+                        if (id === 'addresses') {
+                            return feature.properties.address === select_box.value;
+                        } else {
+                            return feature.properties.type === select_box.value;
+                        }
+                    }
                 });
             }
             console.log(id);
