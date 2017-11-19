@@ -33,7 +33,7 @@ $('#add_tree').click(function() {
                     opacity: 1,
                     fillOpacity: 0.8
                 });
-                var popup = 'Species: ' + $('#species').val() + '<br><br><a id="popup_button">Remove</a>';
+                var popup = '<b>Species:</b> ' + $('#species').val() + '<br><br><a id="popup_button">Remove</a>';
                 tree_location.bindPopup(popup);
                 tree_location.addTo(map);
 

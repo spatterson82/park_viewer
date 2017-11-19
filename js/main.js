@@ -87,9 +87,10 @@ function closeNav() {
 
         var prop = feature.properties;
         if (id === 'addresses') {
-            return L.popup().setContent('<p style="font-size:12px">' + prop.address + '</p>');
+            console.log(feature.properties);
+            return L.popup().setContent('<p style="font-size:12px"><b>Address: </b>' + prop.address + '</p>');
         } else {
-            return L.popup().setContent('<p style="font-size:12px">' + prop.type + '</p>');
+            return L.popup().setContent('<p style="font-size:12px"><b>Type: </b>' + prop.type + '</p>');
         }
     }
 
@@ -150,8 +151,10 @@ function closeNav() {
                 filter_data(this, self.id);
             });
 
+            console.log(data.features[0].geometry.type);
             var new_layers;
-            if (data.features[0].geometry.type === 'Point') {
+            var data_type = data.features[0].geometry.type;
+            if (data_type === 'Point') {
                 new_layers = L.geoJSON(data, {
                     onEachFeature: function (row, layer) {
                         // console.log(row, layer);
@@ -170,25 +173,21 @@ function closeNav() {
                         return L.circleMarker(latlng, geojsonMarkerOptions);
                     }
                 });
-            } else if (data.features[0].geometry.type === 'Polygon') {
+            } else if (data_type === 'Polygon' || data_type === 'MultiPolygon') {
                 new_layers = L.geoJSON(data, {
                     onEachFeature: function (row, layer) {
-                        // console.log(row, layer);
-                        layer.bindPopup(createPopup(row));
+                        console.log(row.properties);
+                        layer.bindPopup(createPopup(row, self.id));
                     },
                     id: self.id,
-                    style: function (feature) {
-                        if (feature.geometry.type === 'Point') {
-
-                        } else if (feature.geometry.type === 'Polygon') {
-                            switch (feature.properties.party) {
-                                case 'Republican':
-                                    return {color: "#ff0000"};
-                                case 'Democrat':
-                                    return {color: "#0000ff"};
-                            }
-                        }
-                    }
+                    // style: function (feature) {
+                    //     switch (feature.properties.party) {
+                    //         case 'Republican':
+                    //             return {color: "#ff0000"};
+                    //         case 'Democrat':
+                    //             return {color: "#0000ff"};
+                    //     }
+                    // }
                 });
             }
             console.log(self.id);
@@ -244,8 +243,9 @@ function closeNav() {
         remove_data(id);
 
         $.getJSON(base_url + get_sql_query(id), function(data) {
+            var data_type = data.features[0].geometry.type;
             var new_layers;
-            if (data.features[0].geometry.type === 'Point') {
+            if (data_type === 'Point') {
                 new_layers = L.geoJSON(data, {
                     onEachFeature: function (row, layer) {
                         // console.log(row, layer);
@@ -271,25 +271,21 @@ function closeNav() {
                         }
                     }
                 });
-            } else if (data.features[0].geometry.type === 'Polygon') {
-                var new_layers = L.geoJSON(data, {
+            } else if (data_type === 'Polygon' || data_type === 'MultiPolygon') {
+                new_layers = L.geoJSON(data, {
                     onEachFeature: function (row, layer) {
                         // console.log(row, layer);
-                        layer.bindPopup(createPopup(row));
+                        layer.bindPopup(createPopup(row, id));
                     },
-                    id: self.id,
-                    style: function (feature) {
-                        if (feature.geometry.type === 'Point') {
-
-                        } else if (feature.geometry.type === 'Polygon') {
-                            switch (feature.properties.party) {
-                                case 'Republican':
-                                    return {color: "#ff0000"};
-                                case 'Democrat':
-                                    return {color: "#0000ff"};
-                            }
-                        }
-                    }
+                    id: id,
+                    // style: function (feature) {
+                    //     switch (feature.properties.party) {
+                    //         case 'Republican':
+                    //             return {color: "#ff0000"};
+                    //         case 'Democrat':
+                    //             return {color: "#0000ff"};
+                    //     }
+                    // }
                 });
             }
             console.log(id);
