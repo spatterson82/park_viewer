@@ -22,10 +22,16 @@ $('#add_tree').click(function() {
         var tree_location;
         map.on('click', function(location) {
             if (editing) {
-                tree_location = new L.marker(location.latlng, {
+                tree_location = new L.circleMarker(location.latlng, {
                     draggable: true,
                     id: 'tree_location',
-                    icon: treeicon
+                    icon: treeicon,
+                    radius: 8,
+                    fillColor: "#3dff61",
+                    color: "#000",
+                    weight: 3,
+                    opacity: 1,
+                    fillOpacity: 0.8
                 });
                 var popup = 'Species: ' + $('#species').val() + '<br><br><a id="popup_button">Remove</a>';
                 tree_location.bindPopup(popup);
