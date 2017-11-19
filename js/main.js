@@ -173,7 +173,6 @@ function closeNav() {
             } else if (data_type === 'Polygon' || data_type === 'MultiPolygon') {
                 new_layers = L.geoJSON(data, {
                     onEachFeature: function (row, layer) {
-                        console.log(row.properties);
                         layer.bindPopup(createPopup(row, self.id));
                     },
                     id: self.id,
