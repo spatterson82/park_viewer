@@ -2,7 +2,7 @@
     position: absolute;
     top: 30px;
     left: 7px;
-    font-size:17px;
+    font-size:15px;
     margin-right: 50px;
     color: #282828;
     word-wrap: break-word;
@@ -13,11 +13,12 @@
 #openbtn {
     position: absolute;
     top: 10px;
-    left: 80px;
-    font-size:50px;
-    margin-right: 50px;
+    left: 70px;
+    margin-left: 10px;
+    font-size:35px;
     color: #282828;
     text-decoration: none;
+    line-height: 70px;
 }
 #panel_button a:hover,
 #map_button a:hover,
@@ -33,7 +34,7 @@
     position: absolute;
     top: 30px;
     right: 7px;
-    font-size: 17px;
+    font-size: 15px;
     margin-left: 50px;
     color: #282828;
     word-wrap: break-word;
@@ -44,11 +45,12 @@
 #closebtn {
     position: absolute;
     top: 10px;
-    right: 80px;
-    font-size: 50px;
-    margin-left: 50px;
+    right: 60px;
+    margin-right: 20px;
+    font-size: 35px;
     color: #282828;
     text-decoration: none;
+    line-height: 70px;
 }
 
 #add_tree {

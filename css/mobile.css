@@ -1,4 +1,4 @@
-@media screen and (max-width: 360px) {
+@media screen and (max-width: 380px) {
     #map_button p {
         display: none;
     }
@@ -9,6 +9,15 @@
         font-size:50px;
         color: #282828;
         text-decoration: none;
+    }
+
+    #openbtn {
+        position: absolute;
+        left: 50px;
+    }
+    #closebtn {
+        position: absolute;
+        right: 50px;
     }
 
     #panel_button p {
