@@ -32,5 +32,6 @@
         transition: 0.1s;
         padding-top: 60px;
         z-index: 5;
+        overflow: auto;
     }
 }
