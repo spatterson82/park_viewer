@@ -48,6 +48,17 @@ function closeNav() {
     }
 
 
+    /**
+     * JSON for colors
+     */
+    var colorCodes = {
+        'addresses' : '#7574ff',
+        'land_type' : null,
+        'morse_mountain_pts' : '#ff7800',
+        'trs' : null,
+        'parcels' : null
+    }
+
     // ##################################################
     // form actions
     // ##################################################
@@ -68,13 +79,18 @@ function closeNav() {
     /**
      * Function to create a simple popup
      * @param feature Current feature
+     * @param id Element ID for selected layer
      * @returns {L.popup} Popup object for the feature
      */
-    function createPopup(feature) {
+    function createPopup(feature, id) {
         // TODO make popup unique by layer and show everything
 
         var prop = feature.properties;
-        return L.popup().setContent('<p>' + prop.type + '</p>');
+        if (id === 'addresses') {
+            return L.popup().setContent('<p style="font-size:12px">' + prop.address + '</p>');
+        } else {
+            return L.popup().setContent('<p style="font-size:12px">' + prop.type + '</p>');
+        }
     }
 
 
@@ -85,7 +101,6 @@ function closeNav() {
      * @param id Element ID for the current layer
      */
     function build_query_combo(final_set, id) {
-        // console.log("final set: ", final_set);
         var combo_html = '<select id="' + id + '_combo">';
         var middle = '<option value="" disabled selected style="display: none;">Filter Layer:</option>';
         var final_array = Array.from(final_set);
@@ -109,7 +124,11 @@ function closeNav() {
         // console.log("new_layers: ", features);
         var query_set = new Set();
         features.forEach(function(feature) {
-            query_set.add(feature.properties.type);
+            if (id === 'addresses') {
+                query_set.add(feature.properties.address);
+            } else {
+                query_set.add(feature.properties.type);
+            }
         });
         build_query_combo(query_set, id);
     }
@@ -136,13 +155,13 @@ function closeNav() {
                 new_layers = L.geoJSON(data, {
                     onEachFeature: function (row, layer) {
                         // console.log(row, layer);
-                        layer.bindPopup(createPopup(row));
+                        layer.bindPopup(createPopup(row, self.id), {className: 'popup_data'});
                     },
                     id: self.id,
                     pointToLayer: function (feature, latlng) {
                         var geojsonMarkerOptions = {
                             radius: 8,
-                            fillColor: "#ff7800",
+                            fillColor: colorCodes[self.id],
                             color: "#000",
                             weight: 1,
                             opacity: 1,
@@ -200,12 +219,11 @@ function closeNav() {
     });
 
 
+    /**
+     * Remove the layer associated with the
+     * checkbox that was unchecked
+     */
     function remove_data(id) {
-        /**
-         * Remove the layer associated with the
-         * checkbox that was unchecked
-         */
-
         var layer_list = map._layers;
         for (var layer in layer_list) {
             if (layer_list[layer].options.id === id) {
@@ -231,13 +249,13 @@ function closeNav() {
                 new_layers = L.geoJSON(data, {
                     onEachFeature: function (row, layer) {
                         // console.log(row, layer);
-                        layer.bindPopup(createPopup(row));
+                        layer.bindPopup(createPopup(row, id), {className: 'popup_data'});
                     },
                     id: id,
                     pointToLayer: function (feature, latlng) {
                         var geojsonMarkerOptions = {
                             radius: 8,
-                            fillColor: "#ff7800",
+                            fillColor: colorCodes[id],
                             color: "#000",
                             weight: 1,
                             opacity: 1,
@@ -246,7 +264,11 @@ function closeNav() {
                         return L.circleMarker(latlng, geojsonMarkerOptions);
                     },
                     filter: function(feature, layer) {
-                        return feature.properties.type === select_box.value;
+                        if (id === 'addresses') {
+                            return feature.properties.address === select_box.value;
+                        } else {
+                            return feature.properties.type === select_box.value;
+                        }
                     }
                 });
             } else if (data.features[0].geometry.type === 'Polygon') {
@@ -257,7 +279,6 @@ function closeNav() {
                     },
                     id: self.id,
                     style: function (feature) {
-                        console.log("feature:", feature);
                         if (feature.geometry.type === 'Point') {
 
                         } else if (feature.geometry.type === 'Polygon') {
@@ -271,7 +292,7 @@ function closeNav() {
                     }
                 });
             }
-            console.log(self.id);
+            console.log(id);
             new_layers.addTo(map);
         });
     }
