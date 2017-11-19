@@ -87,7 +87,6 @@ function closeNav() {
 
         var prop = feature.properties;
         if (id === 'addresses') {
-            console.log(feature.properties);
             return L.popup().setContent('<p style="font-size:12px"><b>Address: </b>' + prop.address + '</p>');
         } else {
             return L.popup().setContent('<p style="font-size:12px"><b>Type: </b>' + prop.type + '</p>');
@@ -151,13 +150,11 @@ function closeNav() {
                 filter_data(this, self.id);
             });
 
-            console.log(data.features[0].geometry.type);
             var new_layers;
             var data_type = data.features[0].geometry.type;
             if (data_type === 'Point') {
                 new_layers = L.geoJSON(data, {
                     onEachFeature: function (row, layer) {
-                        // console.log(row, layer);
                         layer.bindPopup(createPopup(row, self.id), {className: 'popup_data'});
                     },
                     id: self.id,
@@ -176,6 +173,7 @@ function closeNav() {
             } else if (data_type === 'Polygon' || data_type === 'MultiPolygon') {
                 new_layers = L.geoJSON(data, {
                     onEachFeature: function (row, layer) {
+                        console.log(row.properties);
                         layer.bindPopup(createPopup(row, self.id));
                     },
                     id: self.id,
@@ -249,7 +247,6 @@ function closeNav() {
             if (data_type === 'Point') {
                 new_layers = L.geoJSON(data, {
                     onEachFeature: function (row, layer) {
-                        // console.log(row, layer);
                         layer.bindPopup(createPopup(row, id), {className: 'popup_data'});
                     },
                     id: id,
@@ -275,7 +272,6 @@ function closeNav() {
             } else if (data_type === 'Polygon' || data_type === 'MultiPolygon') {
                 new_layers = L.geoJSON(data, {
                     onEachFeature: function (row, layer) {
-                        // console.log(row, layer);
                         layer.bindPopup(createPopup(row, id));
                     },
                     id: id,
@@ -290,8 +286,13 @@ function closeNav() {
                         }
                     },
                     filter: function(feature, layer) {
-                        if (id === 'addresses') {
-                            return feature.properties.address === select_box.value;
+                        if (id === 'trs') {
+                            if (select_box.value === 'null') {
+                                return feature.properties.type === null;
+                            } else {
+                                return feature.properties.type === select_box.value;
+                            }
+
                         } else {
                             return feature.properties.type === select_box.value;
                         }
