@@ -16,7 +16,7 @@ $('#add_tree').click(function() {
             iconUrl: 'img/tree.png',
             iconSize:     [38, 50], // size of the icon
             iconAnchor:   [22, 40], // point of the icon which will correspond to marker's location
-            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+            popupAnchor:  [0, -90] // point from which the popup should open relative to the iconAnchor
         });
 
         var tree_location;
@@ -25,7 +25,6 @@ $('#add_tree').click(function() {
                 tree_location = new L.circleMarker(location.latlng, {
                     draggable: true,
                     id: 'tree_location',
-                    icon: treeicon,
                     radius: 8,
                     fillColor: "#3dff61",
                     color: "#000",
