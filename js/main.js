@@ -89,7 +89,6 @@ function closeNav() {
         if (id === 'addresses') {
             return L.popup().setContent('<p style="font-size:12px"><b>Address: </b>' + prop.address + '</p>');
         } else {
-            console.log(prop);
             if (prop.type === null) {
                 return L.popup().setContent('<p style="font-size:12px"><b>Type: </b>upland</p>');
             }
