@@ -89,6 +89,10 @@ function closeNav() {
         if (id === 'addresses') {
             return L.popup().setContent('<p style="font-size:12px"><b>Address: </b>' + prop.address + '</p>');
         } else {
+            console.log(prop);
+            if (prop.type === null) {
+                return L.popup().setContent('<p style="font-size:12px"><b>Type: </b>upland</p>');
+            }
             return L.popup().setContent('<p style="font-size:12px"><b>Type: </b>' + prop.type + '</p>');
         }
     }
@@ -127,7 +131,11 @@ function closeNav() {
             if (id === 'addresses') {
                 query_set.add(feature.properties.address);
             } else {
-                query_set.add(feature.properties.type);
+                if (feature.properties.type === null) {
+                    query_set.add('upland');
+                } else {
+                    query_set.add(feature.properties.type);
+                }
             }
         });
         build_query_combo(query_set, id);
@@ -286,7 +294,7 @@ function closeNav() {
                     },
                     filter: function(feature, layer) {
                         if (id === 'trs') {
-                            if (select_box.value === 'null') {
+                            if (select_box.value === 'upland') {
                                 return feature.properties.type === null;
                             } else {
                                 return feature.properties.type === select_box.value;
